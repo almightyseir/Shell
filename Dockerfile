@@ -21,8 +21,16 @@ RUN git clone https://github.com/tsl0922/ttyd.git && \
     make && \
     make install
 
+# Install Node.js and npm
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
+    apt-get install -y nodejs
+
+# Install the localhost npm package globally
+RUN npm install -g localhost
+
 # Expose port
 EXPOSE 8080
 
-# Start ttyd
-CMD ttyd -p 8080 bash
+# Start ttyd and tunnel using localhost npm package
+CMD ttyd -p 8080 bash & \
+    localhost run --port 8080 --subdomain hahaserver
