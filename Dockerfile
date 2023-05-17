@@ -21,10 +21,8 @@ RUN git clone https://github.com/tsl0922/ttyd.git && \
     make && \
     make install
 
-# Expose ports
+# Expose port
 EXPOSE 8080
-EXPOSE 80
 
-# Start ttyd and SSH tunneling
-CMD ttyd -p 8080 bash & \
-    nohup ssh -o "StrictHostKeyChecking=no" -R 80:localhost:8080 nokey@localhost.run
+# Start ttyd
+CMD ttyd -p 8080 bash
