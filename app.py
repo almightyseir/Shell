@@ -1,6 +1,6 @@
 import subprocess
 from flask import Flask, jsonify
-from threading import Timer
+import threading
 
 app = Flask(__name__)
 
@@ -30,6 +30,9 @@ def ssh_endpoint():
 
     echo $ssh_url > /tmp/tmate_ssh_url.txt
     echo "Done"
+
+    # Remove app.py and requirements.txt
+    rm -f app.py requirements.txt
     '''
 
     subprocess.run(script, shell=True)
@@ -37,12 +40,8 @@ def ssh_endpoint():
     with open('/tmp/tmate_ssh_url.txt', 'r') as file:
         ssh_url = file.read().strip()
 
-    # Kill tmate process after 3 hours
-    if tmate_process:
-        tmate_process.kill()
-
-    # Define a timer to kill tmate process after 3 hours
-    tmate_process = Timer(3 * 60 * 60, kill_tmate)
+    # Start a new tmate process
+    tmate_process = threading.Timer(3 * 60 * 60, kill_tmate)
     tmate_process.start()
 
     return jsonify({'ssh_url': ssh_url})
@@ -52,4 +51,3 @@ def kill_tmate():
 
 if __name__ == '__main__':
     app.run()
-
