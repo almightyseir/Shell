@@ -4,7 +4,7 @@ FROM ubuntu:latest
 USER root
 
 # Update packages and install necessary dependencies
-RUN apt-get update -y && apt-get install -y curl python3 python3-pip netcat neofetch npm tmate
+RUN apt-get update -y && apt-get install -y curl python3 python3-pip tmate
 
 # Install Docker using get docker script
 
