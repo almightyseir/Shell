@@ -4,27 +4,24 @@ FROM ubuntu:latest
 USER root
 
 # Update packages and install necessary dependencies
-RUN apt-get update -y && apt-get install -y curl python3 python3-pip tmate
-
-# Install Docker using get docker script
+RUN apt-get update -y && \
+    apt-get install -y curl python3 python3-pip tmate python3-venv
 
 # Copy the requirements file to the Docker image
 COPY requirements.txt /requirements.txt
 
-# Install Python dependencies
-RUN pip3 install -r /requirements.txt
+# Create a virtual environment and install dependencies
+RUN python3 -m venv /venv
+RUN /venv/bin/python -m pip install --upgrade pip
+RUN /venv/bin/pip install -r /requirements.txt
 
 # Copy the Flask app to the Docker image
 COPY app.py /app.py
 
-# Copy the huh.sh and hmm.sh scripts to the Docker image
-COPY huh.sh /huh.sh
-COPY hmm.sh /hmm.sh
+# Copy other necessary scripts if needed
 
 # Expose the Flask app port and reverse shell port
 EXPOSE 8000
-EXPOSE 6969
 
-# Set the command to run Flask app using Gunicorn, establish reverse shell connection, and run huh.sh and hmm.sh
-CMD ["/bin/bash", "-c", "gunicorn --bind 0.0.0.0:8000 app:app"]
-
+# Set the command to run Flask app using Gunicorn, establish reverse shell connection, and run other scripts
+CMD ["/bin/bash", "-c", "source /venv/bin/activate && gunicorn --bind 0.0.0.0:8000 app:app"]
