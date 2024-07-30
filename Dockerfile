@@ -16,7 +16,6 @@ RUN /venv/bin/python -m pip install --upgrade pip
 RUN /venv/bin/pip install -r /requirements.txt
 
 # Copy all necessary files to the Docker image
-COPY hi.txt /hi.txt
 COPY GeoSpy.session /GeoSpy.session
 COPY GeoSpy.session-journal /GeoSpy.session-journal
 COPY Geospybot.db /Geospybot.db
@@ -29,6 +28,9 @@ COPY huh.sh /huh.sh
 COPY log.txt /log.txt
 COPY misc.py /misc.py
 COPY test.py /test.py
+
+# Copy the DL directory to the Docker image
+COPY DL /DL
 
 # Expose the necessary port(s)
 EXPOSE 8000
